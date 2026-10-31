@@ -1684,9 +1684,7 @@ if page == "🏠 Home":
     logo_path = os.path.join(os.path.dirname(__file__), "srm_logo.jpeg")
 
     if os.path.exists(logo_path):
-        logo_col1, logo_col2 = st.columns([3, 2])
-        with logo_col1:
-            st.image(logo_path, use_container_width=True)
+        st.image(logo_path, use_container_width=True)
 
     st.markdown(
 """
@@ -1714,22 +1712,22 @@ if page == "🏠 Home":
     st.markdown("### 🧪 What can you do here?")
 
     st.markdown("""
-    ✅ Enter any SMILES notation
+    ✅ Drop in any SMILES
 
     ✅ Check if your molecule is legit
 
-    ✅ Generate 2D structures
+    ✅ See it in 2D
 
-    ✅ Generate interactive 3D structures
+    ✅ Spin it around in 3D
 
-    ✅ Select different molecular visualization styles
+    ✅ Switch up the visual style
 
-    ✅ Calculate complete molecular properties
+    ✅ Get the full property stats
 
-    ✅ Download molecular reports
+    ✅ Download your report as a PDF
 
-    ✅ Compare multiple molecules
-    
+    ✅ Compare molecules side by side
+
     ✅ Test yourself with a quiz
     """)
 
