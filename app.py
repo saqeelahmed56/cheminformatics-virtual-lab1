@@ -58,9 +58,9 @@ st.set_page_config(
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
-:root{--ink:#1F2A33;--muted:#6B7A86;--line:#E2E8EC;--tint:#EAF2F2;--accent:#4F8A8B;--surface:#FFFFFF;}
+:root{--ink:#E6ECEF;--muted:#8A98A3;--line:#26313A;--tint:#18262A;--accent:#6FB3B0;--surface:#151C22;--bg:#0F1418;}
 html, body, [class*="css"], .stApp {font-family:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--ink);}
-.stApp{background:#F7F9FA;}
+.stApp{background:var(--bg);}
 .block-container{max-width:1000px;padding-top:2.2rem;padding-bottom:4rem;}
 h1,h2,h3{font-weight:600;letter-spacing:-0.01em;color:var(--ink);}
 h1{font-size:2.1rem;} h2{font-size:1.5rem;margin-top:1.6rem;} h3{font-size:1.15rem;}
@@ -77,9 +77,9 @@ footer{visibility:hidden;}
 [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked){background:var(--tint);font-weight:600;}
 [data-testid="stSidebar"] [role="radiogroup"] label > div:first-child{display:none;}
 input, textarea, [data-baseweb="select"] > div{border-radius:8px !important;border-color:var(--line) !important;background:var(--surface) !important;}
-input:focus, textarea:focus{border-color:var(--accent) !important;box-shadow:0 0 0 2px rgba(79,138,139,.18) !important;}
-.stButton > button, .stDownloadButton > button{border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font-weight:500;padding:.5rem 1.1rem;transition:background .15s;}
-.stButton > button:hover, .stDownloadButton > button:hover{background:#417374;border-color:#417374;color:#fff;}
+input:focus, textarea:focus{border-color:var(--accent) !important;box-shadow:0 0 0 2px rgba(111,179,176,.28) !important;}
+.stButton > button, .stDownloadButton > button{border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#0F1418;font-weight:600;padding:.5rem 1.1rem;transition:background .15s;}
+.stButton > button:hover, .stDownloadButton > button:hover{background:#8CC6C3;border-color:#8CC6C3;color:#0F1418;}
 .stButton > button:focus-visible, .stDownloadButton > button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 [data-testid="stMetric"]{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;}
 [data-testid="stMetricLabel"]{color:var(--muted);}
@@ -439,7 +439,7 @@ def display_3d_structure(mol3d, style, show_surface=False):
             }
         )
 
-    view.setBackgroundColor("white")
+    view.setBackgroundColor("#151C22")
 
     view.zoomTo()
 
@@ -1542,6 +1542,108 @@ def generate_multi_final_report(student_name, registration_number, molecule_reco
 
 
 # ============================================================
+# VISITOR SIGN-IN (saves each visit to a private Google Sheet)
+# ============================================================
+
+import re
+from datetime import datetime, timezone, timedelta
+
+SHEET_HEADERS = ["Timestamp (IST)", "Name", "Registration Number", "Email"]
+EMAIL_PATTERN = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+
+def sheet_is_configured():
+    """True when the Google Sheet credentials exist in Streamlit secrets."""
+    try:
+        return "gcp_service_account" in st.secrets and "sheet_id" in st.secrets
+    except Exception:
+        return False
+
+
+def log_visit_to_sheet(name, reg_no, email):
+    """Append one row to the Google Sheet. Returns True when saved."""
+    try:
+        import gspread
+        from google.oauth2.service_account import Credentials
+
+        creds = Credentials.from_service_account_info(
+            dict(st.secrets["gcp_service_account"]),
+            scopes=["https://www.googleapis.com/auth/spreadsheets"],
+        )
+        worksheet = gspread.authorize(creds).open_by_key(st.secrets["sheet_id"]).sheet1
+        if worksheet.row_values(1) != SHEET_HEADERS:
+            worksheet.insert_row(SHEET_HEADERS, 1)
+        ist = timezone(timedelta(hours=5, minutes=30))
+        worksheet.append_row(
+            [datetime.now(ist).strftime("%Y-%m-%d %H:%M:%S"), name, reg_no, email],
+            value_input_option="USER_ENTERED",
+        )
+        return True
+    except Exception as error:
+        print("Could not save visitor to Google Sheet:", error)
+        return False
+
+
+if "visitor" not in st.session_state:
+    _, centre, _ = st.columns([1, 2, 1])
+    with centre:
+        st.markdown(
+            """
+            <div class="hero">
+              <h1>Cheminformatics Virtual Laboratory</h1>
+              <p class="college">SRM Institute of Science and Technology, Tiruchirappalli</p>
+              <p class="dept">Enter your details to begin</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        with st.form("visitor_form"):
+            v_name = st.text_input("Full name")
+            v_reg = st.text_input("Registration number")
+            v_email = st.text_input("Email address")
+            v_agree = st.checkbox(
+                "I understand that my name, registration number and email "
+                "are recorded for this laboratory course."
+            )
+            v_submit = st.form_submit_button("Start laboratory")
+
+        if not sheet_is_configured():
+            st.warning("The visitor log is not connected yet, so entries are not being saved.")
+
+        if v_submit:
+            problems = []
+            if not v_name.strip():
+                problems.append("Enter your full name.")
+            if not v_reg.strip():
+                problems.append("Enter your registration number.")
+            if not EMAIL_PATTERN.match(v_email.strip()):
+                problems.append("Enter a valid email address.")
+            if not v_agree:
+                problems.append("Tick the box to continue.")
+
+            if problems:
+                for message in problems:
+                    st.error(message)
+            else:
+                if sheet_is_configured():
+                    log_visit_to_sheet(v_name.strip(), v_reg.strip(), v_email.strip())
+                st.session_state["visitor"] = {
+                    "name": v_name.strip(),
+                    "reg_no": v_reg.strip(),
+                    "email": v_email.strip(),
+                }
+                st.rerun()
+    st.stop()
+
+# Pre-fill the sidebar fields with what the visitor entered
+if not st.session_state.get("student_name"):
+    st.session_state["student_name"] = st.session_state["visitor"]["name"]
+if not st.session_state.get("registration_number"):
+    st.session_state["registration_number"] = st.session_state["visitor"]["reg_no"]
+
+
+# ============================================================
 # SIDEBAR
 # ============================================================
 
@@ -1693,7 +1795,7 @@ if page == "Home":
 
     st.markdown("### Developed by")
     st.markdown("**S Saqeel Ahmed**")
-    st.markdown("Guided by Dr.P.Pachamuthu,Professor")
+    st.markdown("Guided by Dr.P.Pachamuthu")
     st.markdown("Faculty of Engineering and Technology  ")
     st.markdown("SRM Institute of Science and Technology, Tiruchirappalli")
 
