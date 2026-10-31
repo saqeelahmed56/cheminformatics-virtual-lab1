@@ -1693,7 +1693,7 @@ if page == "Home":
 
     st.markdown("### Developed by")
     st.markdown("**S Saqeel Ahmed**")
-    st.markdown("Guided by Dr.P.Pachamuthu")
+    st.markdown("Guided by Dr.P.Pachamuthu,Professor")
     st.markdown("Faculty of Engineering and Technology  ")
     st.markdown("SRM Institute of Science and Technology, Tiruchirappalli")
 
