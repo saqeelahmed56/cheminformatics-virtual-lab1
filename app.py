@@ -2609,5 +2609,5 @@ st.divider()
 st.caption(
     "🧪 Cheminformatics Virtual Laboratory | "
     "Developed using Python, Streamlit and RDKit |"
-    "****** PEACE OUT GUYS ✌️ ******"
+    " PEACE OUT GUYS ✌️"
 )
