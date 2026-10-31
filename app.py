@@ -1558,8 +1558,7 @@ def generate_multi_final_report(student_name, registration_number, molecule_reco
 import re
 from datetime import datetime, timezone, timedelta
 
-SHEET_HEADERS = ["Timestamp (IST)", "Name", "Registration Number", "Email"]
-EMAIL_PATTERN = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+SHEET_HEADERS = ["Timestamp (IST)", "Name", "Registration Number"]
 
 
 def sheet_is_configured():
@@ -1570,7 +1569,7 @@ def sheet_is_configured():
         return False
 
 
-def save_student_to_sheet(name, reg_no, email, row_number=None):
+def save_student_to_sheet(name, reg_no, row_number=None):
     """Add a row for this student, or update their row if they edit details.
     Returns the sheet row number, or None if saving failed."""
     try:
@@ -1582,15 +1581,15 @@ def save_student_to_sheet(name, reg_no, email, row_number=None):
             scopes=["https://www.googleapis.com/auth/spreadsheets"],
         )
         worksheet = gspread.authorize(creds).open_by_key(st.secrets["sheet_id"]).sheet1
-        if worksheet.row_values(1) != SHEET_HEADERS:
+        if worksheet.row_values(1)[:len(SHEET_HEADERS)] != SHEET_HEADERS:
             worksheet.insert_row(SHEET_HEADERS, 1)
             row_number = None
 
         ist = timezone(timedelta(hours=5, minutes=30))
-        row = [datetime.now(ist).strftime("%Y-%m-%d %H:%M:%S"), name, reg_no, email]
+        row = [datetime.now(ist).strftime("%Y-%m-%d %H:%M:%S"), name, reg_no]
 
         if row_number:
-            worksheet.update(f"A{row_number}:D{row_number}", [row])
+            worksheet.update(f"A{row_number}:C{row_number}", [row])
             return row_number
 
         result = worksheet.append_row(row, value_input_option="USER_ENTERED")
@@ -1636,27 +1635,18 @@ st.sidebar.divider()
 st.sidebar.markdown("### 👩‍🎓 Student Information")
 student_name = st.sidebar.text_input("Student Name", key="student_name")
 registration_number = st.sidebar.text_input("Registration Number", key="registration_number")
-student_email = st.sidebar.text_input("Email", key="student_email")
-
-# Save the details once they are all filled in (one row per student session)
-_details_complete = bool(
-    student_name.strip()
-    and registration_number.strip()
-    and EMAIL_PATTERN.match(student_email.strip())
-)
-
-if student_email.strip() and not EMAIL_PATTERN.match(student_email.strip()):
-    st.sidebar.caption("Enter a valid email address.")
+# Save the details once both are filled in (one row per student session)
+_details_complete = bool(student_name.strip() and registration_number.strip())
 
 if _details_complete and sheet_is_configured():
-    _current = (student_name.strip(), registration_number.strip(), student_email.strip())
+    _current = (student_name.strip(), registration_number.strip())
     if st.session_state.get("saved_details") != _current:
         _row = save_student_to_sheet(*_current, row_number=st.session_state.get("sheet_row"))
         if _row:
             st.session_state["sheet_row"] = _row
             st.session_state["saved_details"] = _current
 
-st.sidebar.caption("Your name, registration number and email are saved for this lab course 📝")
+st.sidebar.caption("Your name and registration number are saved for this lab course 📝")
 
 st.sidebar.markdown("""
 ### 🎓 Learning Objectives
@@ -1684,7 +1674,9 @@ if page == "🏠 Home":
     logo_path = os.path.join(os.path.dirname(__file__), "srm_logo.jpeg")
 
     if os.path.exists(logo_path):
-        st.image(logo_path, use_container_width=True)
+        _lg1, _lg2, _lg3 = st.columns([1, 2, 1])
+        with _lg2:
+            st.image(logo_path, use_container_width=True)
 
     st.markdown(
 """
