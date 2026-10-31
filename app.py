@@ -94,15 +94,21 @@ input:focus, textarea:focus{border-color:var(--lilac) !important;box-shadow:0 0 
 [data-testid="stImage"] img{border-radius:14px;border:1px solid var(--line);background:#fff;}
 iframe{border-radius:16px;border:1px solid var(--line);}
 /* hero */
-.hero{position:relative;overflow:hidden;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:2rem 2rem 1.7rem;margin:.6rem 0 1.6rem;}
+.hero{position:relative;overflow:hidden;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:2.2rem 8.5rem 2rem;margin:.6rem 0 1.6rem;}
 .hero h1{margin:0 0 .5rem 0;font-weight:800;font-size:clamp(1.7rem,4.4vw,2.7rem);line-height:1.1;}
 .hero .college{margin:0;font-size:1.08rem;font-weight:600;color:var(--lilac);}
 .hero .dept{margin:.25rem 0 0;color:var(--muted);}
 .hero .tagline{margin:1rem 0 .6rem;font-family:'Bricolage Grotesque',sans-serif;font-size:1.25rem;font-weight:700;color:var(--amber);}
 .hero .chip{display:inline-block;padding:.3rem .85rem;margin:.25rem .35rem 0 0;border:1px solid var(--line);border-radius:999px;background:var(--raise);font-size:.9rem;}
-.hero-ring{display:block;margin:0 auto .9rem;width:76px;height:76px;fill:none;stroke:var(--lilac);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:.9;}
-.hero-ring line{stroke:var(--amber);}
-@media (max-width:640px){.hero{padding:1.4rem 1.2rem;}.hero-ring{width:60px;height:60px;}}
+.sticker{position:absolute;top:50%;width:92px;height:92px;padding:16px;border-radius:24px;background:var(--raise);border:1px solid var(--line);}
+.sticker.left{left:1.6rem;transform:translateY(-50%) rotate(-8deg);}
+.sticker.right{right:1.6rem;transform:translateY(-50%) rotate(8deg);}
+.sticker svg{width:100%;height:100%;fill:none;stroke-linejoin:round;stroke-linecap:round;}
+.sticker .ln{stroke:var(--lilac);stroke-width:4;}
+.sticker line{stroke:var(--amber);stroke-width:4;}
+.sticker .liq{fill:var(--amber);fill-opacity:.35;stroke:none;}
+.sticker .bub{fill:var(--amber);stroke:none;}
+@media (max-width:760px){.sticker{display:none;}.hero{padding:1.4rem 1.2rem;}}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
 </style>
 """, unsafe_allow_html=True)
@@ -1681,7 +1687,8 @@ if page == "🏠 Home":
     st.markdown(
 """
 <div class="hero">
-<svg class="hero-ring" viewBox="0 0 120 120" aria-hidden="true"><polygon points="60.0,16.0 98.1,38.0 98.1,82.0 60.0,104.0 21.9,82.0 21.9,38.0"/><line x1="64.7" y1="28.7" x2="84.7" y2="40.3"/><line x1="84.7" y1="79.7" x2="64.7" y2="91.3"/><line x1="30.6" y1="71.6" x2="30.6" y2="48.4"/></svg>
+<div class="sticker left"><svg viewBox="0 0 120 120" aria-hidden="true"><path class="liq" d="M38 78 H82 L90 92 Q94 102 84 102 H36 Q26 102 30 92 Z"/><path class="ln" d="M48 16 H72 M52 16 V48 L28 92 Q22 104 36 104 H84 Q98 104 92 92 L68 48 V16"/><circle class="bub" cx="54" cy="66" r="4"/><circle class="bub" cx="68" cy="58" r="3"/><circle class="bub" cx="62" cy="86" r="3"/></svg></div>
+<div class="sticker right"><svg viewBox="0 0 120 120" aria-hidden="true"><polygon class="ln" points="60.0,20.0 94.6,40.0 94.6,80.0 60.0,100.0 25.4,80.0 25.4,40.0"/><line x1="64.2" y1="32.4" x2="81.8" y2="42.6"/><line x1="81.8" y1="77.4" x2="64.2" y2="87.6"/><line x1="34.0" y1="70.2" x2="34.0" y2="49.8"/></svg></div>
 <h1>🧪 Cheminformatics Virtual Laboratory</h1>
 <p class="college">SRM Institute of Science and Technology, Tiruchirappalli</p>
 <p class="dept">Faculty of Engineering and Technology | Division of Chemistry</p>
