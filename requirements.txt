@@ -1,0 +1,6 @@
+streamlit
+rdkit
+py3Dmol
+pandas
+fpdf2
+Pillow
