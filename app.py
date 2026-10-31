@@ -1684,7 +1684,7 @@ if page == "🏠 Home":
 <svg class="hero-ring" viewBox="0 0 120 120" aria-hidden="true"><polygon points="60.0,16.0 98.1,38.0 98.1,82.0 60.0,104.0 21.9,82.0 21.9,38.0"/><line x1="64.7" y1="28.7" x2="84.7" y2="40.3"/><line x1="84.7" y1="79.7" x2="64.7" y2="91.3"/><line x1="30.6" y1="71.6" x2="30.6" y2="48.4"/></svg>
 <h1>🧪 Cheminformatics Virtual Laboratory</h1>
 <p class="college">SRM Institute of Science and Technology, Tiruchirappalli</p>
-<p class="dept">Faculty of Engineering and Technology | School of Sciences | Division of Chemistry</p>
+<p class="dept">Faculty of Engineering and Technology | Division of Chemistry</p>
 <p class="tagline">Draw it. Spin it. Decode it. ✨</p>
 <span class="chip">🧬 2D + 3D</span><span class="chip">📊 Stats</span><span class="chip">📝 Quiz</span><span class="chip">📄 PDF report</span>
 </div>
@@ -1704,22 +1704,22 @@ if page == "🏠 Home":
     st.markdown("### 🧪 What can you do here?")
 
     st.markdown("""
-    ✅ Enter any SMILES notation
+    ✅ Drop in any SMILES
 
     ✅ Check if your molecule is legit
 
-    ✅ Generate 2D structures
+    ✅ See it in 2D
 
-    ✅ Generate interactive 3D structures
+    ✅ Spin it around in 3D
 
-    ✅ Select different molecular visualization styles
+    ✅ Switch up the visual style
 
-    ✅ Calculate complete molecular properties
+    ✅ Get the full property stats
 
-    ✅ Download molecular reports
+    ✅ Download your report as a PDF
 
-    ✅ Compare multiple molecules
-    
+    ✅ Compare molecules side by side
+
     ✅ Test yourself with a quiz
     """)
 
@@ -1768,7 +1768,7 @@ if page == "🏠 Home":
 
     st.markdown("### 👨‍🏫 Developed by")
     st.markdown("**S Saqeel Ahmed**")
-    st.markdown("Guided by Dr.P.Pachamuthu,Professor")
+    st.markdown("Guided by Dr.P.Pachamuthu")
     st.markdown("Faculty of Engineering and Technology  ")
     st.markdown("SRM Institute of Science and Technology, Tiruchirappalli")
 
