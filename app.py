@@ -1711,22 +1711,22 @@ if page == "🏠 Home":
     st.markdown("### 🧪 What can you do here?")
 
     st.markdown("""
-    ✅ Drop in any SMILES
+    ✅ Enter any SMILES notation
 
     ✅ Check if your molecule is legit
 
-    ✅ See it in 2D
+    ✅ Generate 2D structures
 
-    ✅ Spin it around in 3D
+    ✅ Generate interactive 3D structures
 
-    ✅ Switch up the visual style
+    ✅ Select different molecular visualization styles
 
-    ✅ Get the full property stats
+    ✅ Calculate complete molecular properties
 
-    ✅ Download your report as a PDF
+    ✅ Download molecular reports
 
-    ✅ Compare molecules side by side
-
+    ✅ Compare multiple molecules
+    
     ✅ Test yourself with a quiz
     """)
 
@@ -1775,7 +1775,7 @@ if page == "🏠 Home":
 
     st.markdown("### 👨‍🏫 Developed by")
     st.markdown("**S Saqeel Ahmed**")
-    st.markdown("Guided by Dr.P.Pachamuthu")
+    st.markdown("Guided by Dr.P.Pachamuthu, Professor")
     st.markdown("Faculty of Engineering and Technology  ")
     st.markdown("SRM Institute of Science and Technology, Tiruchirappalli")
 
