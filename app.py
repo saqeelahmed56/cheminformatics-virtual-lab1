@@ -57,42 +57,52 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
-:root{--ink:#E6ECEF;--muted:#8A98A3;--line:#26313A;--tint:#18262A;--accent:#6FB3B0;--surface:#151C22;--bg:#0F1418;}
-html, body, [class*="css"], .stApp {font-family:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--ink);}
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap');
+:root{--bg:#14111F;--surface:#1D1A2B;--raise:#262238;--line:#332E4A;--ink:#F2EEF9;--muted:#A199BA;--lilac:#B79CFF;--lilac-soft:rgba(183,156,255,.14);--amber:#FFB86B;}
+html, body, [class*="css"], .stApp{font-family:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--ink);}
 .stApp{background:var(--bg);}
-.block-container{max-width:1000px;padding-top:2.2rem;padding-bottom:4rem;}
-h1,h2,h3{font-weight:600;letter-spacing:-0.01em;color:var(--ink);}
-h1{font-size:2.1rem;} h2{font-size:1.5rem;margin-top:1.6rem;} h3{font-size:1.15rem;}
-p, li{line-height:1.65;}
-hr{border:none;border-top:1px solid var(--line);margin:1.6rem 0;}
+.block-container{max-width:1000px;padding-top:2rem;padding-bottom:4rem;}
+h1,h2,h3,h4{font-family:'Bricolage Grotesque','Instrument Sans',system-ui,sans-serif;font-weight:700;letter-spacing:-0.02em;color:var(--ink);}
+h1{font-size:2.3rem;} h2{font-size:1.65rem;margin-top:1.8rem;} h3{font-size:1.2rem;}
+p, li{line-height:1.7;}
+hr{border:none;border-top:1px solid var(--line);margin:1.8rem 0;}
 [data-testid="stHeader"]{background:transparent;}
 footer{visibility:hidden;}
+/* sidebar */
 [data-testid="stSidebar"]{background:var(--surface);border-right:1px solid var(--line);}
-[data-testid="stSidebar"] h1{font-size:1.25rem;}
-[data-testid="stSidebar"] h3{font-size:.95rem;color:var(--muted);font-weight:600;}
-[data-testid="stSidebar"] [role="radiogroup"]{gap:2px;}
-[data-testid="stSidebar"] [role="radiogroup"] label{padding:.45rem .7rem;border-radius:8px;width:100%;transition:background .15s;}
-[data-testid="stSidebar"] [role="radiogroup"] label:hover{background:var(--tint);}
-[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked){background:var(--tint);font-weight:600;}
+[data-testid="stSidebar"] h1{font-size:1.35rem;}
+[data-testid="stSidebar"] h3{font-size:1rem;color:var(--muted);}
+[data-testid="stSidebar"] [role="radiogroup"]{gap:3px;}
+[data-testid="stSidebar"] [role="radiogroup"] label{padding:.55rem .8rem;border-radius:12px;width:100%;border-left:3px solid transparent;transition:background .15s;}
+[data-testid="stSidebar"] [role="radiogroup"] label:hover{background:var(--raise);}
+[data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked){background:var(--lilac-soft);border-left-color:var(--lilac);font-weight:600;}
 [data-testid="stSidebar"] [role="radiogroup"] label > div:first-child{display:none;}
-input, textarea, [data-baseweb="select"] > div{border-radius:8px !important;border-color:var(--line) !important;background:var(--surface) !important;}
-input:focus, textarea:focus{border-color:var(--accent) !important;box-shadow:0 0 0 2px rgba(111,179,176,.28) !important;}
-.stButton > button, .stDownloadButton > button{border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#0F1418;font-weight:600;padding:.5rem 1.1rem;transition:background .15s;}
-.stButton > button:hover, .stDownloadButton > button:hover{background:#8CC6C3;border-color:#8CC6C3;color:#0F1418;}
-.stButton > button:focus-visible, .stDownloadButton > button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-[data-testid="stMetric"]{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;}
+/* inputs */
+input, textarea, [data-baseweb="select"] > div{border-radius:12px !important;border-color:var(--line) !important;background:var(--bg) !important;}
+input:focus, textarea:focus{border-color:var(--lilac) !important;box-shadow:0 0 0 3px rgba(183,156,255,.22) !important;}
+/* buttons */
+.stButton > button, .stDownloadButton > button{border-radius:999px;border:0;background:var(--lilac);color:#1A1330;font-weight:600;padding:.55rem 1.3rem;transition:background .15s, transform .15s;}
+.stButton > button:hover, .stDownloadButton > button:hover{background:#CBB7FF;color:#1A1330;transform:translateY(-1px);}
+.stButton > button:focus-visible, .stDownloadButton > button:focus-visible{outline:2px solid var(--amber);outline-offset:3px;}
+/* metrics */
+[data-testid="stMetric"]{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:1.1rem 1.2rem;}
 [data-testid="stMetricLabel"]{color:var(--muted);}
-[data-testid="stMetricValue"]{font-weight:600;font-size:1.6rem;}
-[data-testid="stDataFrame"], [data-testid="stTable"]{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);}
-[data-testid="stAlert"]{border-radius:10px;border:1px solid var(--line);}
-[data-testid="stImage"] img{border-radius:10px;border:1px solid var(--line);background:#fff;}
-iframe{border-radius:12px;border:1px solid var(--line);}
-.hero{background:var(--tint);border-radius:16px;padding:2rem 2rem 1.7rem;margin:.6rem 0 1.4rem;}
-.hero h1{margin:0 0 .4rem 0;font-size:2.3rem;}
-.hero .college{margin:0;font-size:1.1rem;font-weight:500;color:var(--accent);}
-.hero .dept{margin:.2rem 0 0;color:var(--muted);}
-@media (max-width:640px){.hero{padding:1.4rem 1.2rem;}.hero h1{font-size:1.75rem;}}
+[data-testid="stMetricValue"]{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.75rem;color:var(--amber);}
+/* tables, alerts, images */
+[data-testid="stDataFrame"], [data-testid="stTable"]{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);}
+[data-testid="stAlert"]{border-radius:14px;border:1px solid var(--line);}
+[data-testid="stImage"] img{border-radius:14px;border:1px solid var(--line);background:#fff;}
+iframe{border-radius:16px;border:1px solid var(--line);}
+/* hero */
+.hero{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:2rem 2rem 1.7rem;margin:.6rem 0 1.6rem;}
+.hero h1{margin:0 0 .5rem 0;padding-right:5.5rem;font-weight:800;font-size:clamp(1.7rem,4.4vw,2.7rem);line-height:1.1;}
+.hero .college{margin:0;font-size:1.08rem;font-weight:600;color:var(--lilac);padding-right:5.5rem;}
+.hero .dept{margin:.25rem 0 0;color:var(--muted);padding-right:5.5rem;}
+.hero .tagline{margin:1rem 0 .6rem;font-family:'Bricolage Grotesque',sans-serif;font-size:1.25rem;font-weight:700;color:var(--amber);}
+.hero .chip{display:inline-block;padding:.3rem .85rem;margin:.25rem .35rem 0 0;border:1px solid var(--line);border-radius:999px;background:var(--raise);font-size:.9rem;}
+.hero-ring{position:absolute;top:1.1rem;right:1.2rem;width:96px;height:96px;fill:none;stroke:var(--lilac);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:.9;}
+.hero-ring line{stroke:var(--amber);}
+@media (max-width:640px){.hero{padding:1.4rem 1.2rem;}.hero-ring{width:64px;height:64px;top:.9rem;right:.9rem;}.hero h1,.hero .college,.hero .dept{padding-right:4rem;}}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
 </style>
 """, unsafe_allow_html=True)
@@ -439,7 +449,7 @@ def display_3d_structure(mol3d, style, show_surface=False):
             }
         )
 
-    view.setBackgroundColor("#151C22")
+    view.setBackgroundColor("#1D1A2B")
 
     view.zoomTo()
 
@@ -1596,7 +1606,7 @@ def save_student_to_sheet(name, reg_no, email, row_number=None):
 # SIDEBAR
 # ============================================================
 
-st.sidebar.title("Virtual Lab")
+st.sidebar.title("🧪 Virtual Lab")
 
 page = st.sidebar.radio(
 
@@ -1604,26 +1614,26 @@ page = st.sidebar.radio(
 
     [
 
-        "Home",
+        "🏠 Home",
 
-        "Theory",
+        "📖 Theory",
 
-        "Molecular Visualization",
+        "🧬 Molecular Visualization",
 
-        "Molecular Properties Report",
+        "📊 Molecular Properties Report",
 
-        "Structure–Property Analysis",
+        "📈 Structure–Property Analysis",
 
-        "Assessment",
+        "📝 Assessment",
 
-        "Final Project Report"
+        "📄 Final Project Report"
 
     ]
 )
 
 st.sidebar.divider()
 
-st.sidebar.markdown("### Student Information")
+st.sidebar.markdown("### 👩‍🎓 Student Information")
 student_name = st.sidebar.text_input("Student Name", key="student_name")
 registration_number = st.sidebar.text_input("Registration Number", key="registration_number")
 student_email = st.sidebar.text_input("Email", key="student_email")
@@ -1646,10 +1656,10 @@ if _details_complete and sheet_is_configured():
             st.session_state["sheet_row"] = _row
             st.session_state["saved_details"] = _current
 
-st.sidebar.caption("Your name, registration number and email are saved for this laboratory course.")
+st.sidebar.caption("Your name, registration number and email are saved for this lab course 📝")
 
 st.sidebar.markdown("""
-### Learning Objectives
+### 🎓 Learning Objectives
 
 Students can learn:
 
@@ -1666,7 +1676,7 @@ Students can learn:
 # HOME PAGE
 # ============================================================
 
-if page == "Home":
+if page == "🏠 Home":
 
     # ========================================================
     # INSTITUTIONAL HEADER / COLLEGE LOGO
@@ -1679,48 +1689,51 @@ if page == "Home":
             st.image(logo_path, use_container_width=True)
 
     st.markdown(
-        """
-        <div class="hero">
-          <h1>Cheminformatics Virtual Laboratory</h1>
-          <p class="college">SRM Institute of Science and Technology, Tiruchirappalli</p>
-          <p class="dept">Faculty of Engineering and Technology | School of Sciences | Division of Chemistry</p>
-        </div>
-        """,
+"""
+<div class="hero">
+<svg class="hero-ring" viewBox="0 0 120 120" aria-hidden="true"><polygon points="60.0,16.0 98.1,38.0 98.1,82.0 60.0,104.0 21.9,82.0 21.9,38.0"/><line x1="64.7" y1="28.7" x2="84.7" y2="40.3"/><line x1="84.7" y1="79.7" x2="64.7" y2="91.3"/><line x1="30.6" y1="71.6" x2="30.6" y2="48.4"/></svg>
+<h1>🧪 Cheminformatics Virtual Laboratory</h1>
+<p class="college">SRM Institute of Science and Technology, Tiruchirappalli</p>
+<p class="dept">Faculty of Engineering and Technology | School of Sciences | Division of Chemistry</p>
+<p class="tagline">Draw it. Spin it. Decode it. ✨</p>
+<span class="chip">🧬 2D + 3D</span><span class="chip">📊 Stats</span><span class="chip">📝 Quiz</span><span class="chip">📄 PDF report</span>
+</div>
+""",
         unsafe_allow_html=True
     )
 
     st.divider()
 
-    st.markdown("## Welcome to the Virtual Laboratory")
+    st.markdown("## Welcome to the lab ✨")
 
     st.write("""
-    This interactive virtual laboratory helps students understand
-    important concepts in cheminformatics and computational chemistry.
+    Type in a molecule, see it in 2D and 3D, check its stats, and flex your quiz score 🧠
+    A virtual chem lab you can open from your phone, no goggles needed.
     """)
 
-    st.markdown("### What can students do?")
+    st.markdown("### 🧪 What can you do here?")
 
     st.markdown("""
-    - Enter any SMILES notation
+    ✅ Drop in any SMILES
 
-    - Validate molecular structures
+    ✅ Check if your molecule is legit
 
-    - Generate 2D structures
+    ✅ See it in 2D
 
-    - Generate interactive 3D structures
+    ✅ Spin it around in 3D
 
-    - Select different molecular visualization styles
+    ✅ Switch up the visual style
 
-    - Calculate complete molecular properties
+    ✅ Get the full property stats
 
-    - Download molecular reports
+    ✅ Download your report as a PDF
 
-    - Compare multiple molecules
+    ✅ Compare molecules side by side
 
-    - Complete an assessment
+    ✅ Test yourself with a quiz
     """)
 
-    st.markdown("### Example Molecules")
+    st.markdown("### 🔬 Try these molecules")
 
     example_df = pd.DataFrame({
 
@@ -1763,7 +1776,7 @@ if page == "Home":
 
     st.divider()
 
-    st.markdown("### Developed by")
+    st.markdown("### 👨‍🏫 Developed by")
     st.markdown("**S Saqeel Ahmed**")
     st.markdown("Guided by Dr.P.Pachamuthu")
     st.markdown("Faculty of Engineering and Technology  ")
@@ -1774,18 +1787,18 @@ if page == "Home":
 # THEORY PAGE
 # ============================================================
 
-elif page == "Theory":
+elif page == "📖 Theory":
 
-    st.title("Introduction to Cheminformatics")
+    st.title("📖 Introduction to Cheminformatics")
 
     st.markdown("""
 ## What is Cheminformatics?
 
 Cheminformatics combines:
 
-- Chemistry 
-- Computer Science 
-- Data Analysis 
+- Chemistry ⚗️
+- Computer Science 💻
+- Data Analysis 📊
 
 It uses computational techniques to store, process,
 visualize and analyze chemical information.
@@ -1831,19 +1844,19 @@ Examples include:
 Different visualization models help students understand
 the molecular geometry.
 
-### Ball and Stick
+### 🟢 Ball and Stick
 
 Shows atoms as spheres and bonds as sticks.
 
-### Stick Model
+### 🟡 Stick Model
 
 Emphasizes chemical bonding.
 
-### Space Filling
+### 🔵 Space Filling
 
 Shows the approximate molecular volume.
 
-### Wireframe
+### ⚫ Wireframe
 
 Provides a simplified representation of the molecule.
 """)
@@ -1853,11 +1866,11 @@ Provides a simplified representation of the molecule.
 # MOLECULAR VISUALIZATION PAGE
 # ============================================================
 
-elif page == "Molecular Visualization":
+elif page == "🧬 Molecular Visualization":
 
-    st.title("Molecular Visualization Laboratory")
+    st.title("🧬 Molecular Visualization Laboratory")
 
-    st.info("Enter a new SMILES or load an example. The selected molecule will be used across the laboratory pages.")
+    st.info("Drop a SMILES or pick an example 👇 Your molecule follows you across every page of the lab.")
 
     col1, col2 = st.columns([2, 1])
 
@@ -1885,11 +1898,11 @@ elif page == "Molecular Visualization":
 
     if mol is None:
 
-        st.error("Invalid SMILES notation.")
+        st.error("❌ That SMILES doesn't look right. Double-check it 👀")
 
     else:
 
-        st.success("Valid Molecular Structure!")
+        st.success("✅ Valid molecule. You're good to go!")
         st.session_state.latest_smiles = smiles
         st.session_state.latest_properties = calculate_properties(mol)
 
@@ -1956,7 +1969,7 @@ elif page == "Molecular Visualization":
 
         st.divider()
 
-        st.subheader("Interactive 3D Molecular Structure")
+        st.subheader("🌐 Interactive 3D Molecular Structure")
 
         visualization_style = st.selectbox(
 
@@ -1980,7 +1993,7 @@ elif page == "Molecular Visualization":
             "Show van der Waals Surface"
         )
 
-        if st.button("Generate 3D Structure"):
+        if st.button("🚀 Generate 3D Structure"):
 
             with st.spinner(
                 "Generating 3D molecular structure..."
@@ -2010,9 +2023,9 @@ elif page == "Molecular Visualization":
 # COMPLETE MOLECULAR PROPERTIES REPORT
 # ============================================================
 
-elif page == "Molecular Properties Report":
+elif page == "📊 Molecular Properties Report":
 
-    st.title("Complete Molecular Properties Report")
+    st.title("📊 Complete Molecular Properties Report")
 
     st.info("""
 Enter any valid SMILES notation. The system will automatically
@@ -2051,13 +2064,13 @@ generate a complete molecular properties report.
         if mol is None:
 
             st.error(
-                "Invalid SMILES notation. Please check the structure."
+                "❌ That SMILES doesn't look right. Double-check it 👀 Please check the structure."
             )
 
         else:
 
             st.success(
-                "Valid Molecular Structure Detected!"
+                "✅ Valid Molecular Structure Detected!"
             )
 
             properties = calculate_properties(mol)
@@ -2076,7 +2089,7 @@ generate a complete molecular properties report.
 
             with col1:
 
-                st.subheader("2D Molecular Structure")
+                st.subheader("🧬 2D Molecular Structure")
 
                 image = generate_2d_image(mol)
 
@@ -2084,7 +2097,7 @@ generate a complete molecular properties report.
 
             with col2:
 
-                st.subheader("Basic Information")
+                st.subheader("📋 Basic Information")
 
                 st.write(
                     "**Input SMILES:**",
@@ -2137,7 +2150,7 @@ generate a complete molecular properties report.
             # PROPERTY METRICS
             # ------------------------------------------------
 
-            st.subheader("Important Molecular Properties")
+            st.subheader("📊 Important Molecular Properties")
 
             col1, col2, col3, col4 = st.columns(4)
 
@@ -2189,7 +2202,7 @@ generate a complete molecular properties report.
             # COMPLETE TABLE
             # ------------------------------------------------
 
-            st.subheader("Complete Molecular Property Table")
+            st.subheader("📑 Complete Molecular Property Table")
 
             report_data = [
 
@@ -2233,7 +2246,7 @@ generate a complete molecular properties report.
 
             st.download_button(
 
-                "Download Properties Report (CSV)",
+                "⬇️ Download Properties Report (CSV)",
 
                 data=csv,
 
@@ -2247,7 +2260,7 @@ generate a complete molecular properties report.
             # ------------------------------------------------
 
             if st.button(
-                "Generate Molecular PDF Report"
+                "📄 Generate Molecular PDF Report"
             ):
 
                 with st.spinner(
@@ -2265,7 +2278,7 @@ generate a complete molecular properties report.
 
                 st.download_button(
 
-                    "Download Molecular Properties PDF",
+                    "⬇️ Download Molecular Properties PDF",
 
                     data=pdf,
 
@@ -2280,7 +2293,7 @@ generate a complete molecular properties report.
             # 3D VISUALIZATION
             # ------------------------------------------------
 
-            st.subheader("3D Molecular Visualization")
+            st.subheader("🌐 3D Molecular Visualization")
 
             model_style = st.selectbox(
 
@@ -2310,7 +2323,7 @@ generate a complete molecular properties report.
             )
 
             if st.button(
-                "Generate 3D Molecular Model",
+                "🚀 Generate 3D Molecular Model",
                 key="properties_generate_3d"
             ):
 
@@ -2342,9 +2355,9 @@ generate a complete molecular properties report.
 # STRUCTURE PROPERTY ANALYSIS
 # ============================================================
 
-elif page == "Structure–Property Analysis":
+elif page == "📈 Structure–Property Analysis":
 
-    st.title("Structure–Property Analysis")
+    st.title("📈 Structure–Property Analysis")
 
     st.write("""
 Compare the properties of multiple molecules.
@@ -2413,11 +2426,11 @@ Aspirin,CC(=O)Oc1ccccc1C(=O)O"""
             hide_index=True
         )
 
-        st.subheader("Comparison Table")
+        st.subheader("📋 Comparison Table")
 
         csv_data = df.to_csv(index=False).encode("utf-8")
         st.download_button(
-            "Download Comparison Table (CSV)",
+            "⬇️ Download Comparison Table (CSV)",
             data=csv_data,
             file_name="structure_property_comparison.csv",
             mime="text/csv",
@@ -2432,9 +2445,9 @@ Aspirin,CC(=O)Oc1ccccc1C(=O)O"""
 # ASSESSMENT
 # ============================================================
 
-elif page == "Assessment":
+elif page == "📝 Assessment":
 
-    st.title("Cheminformatics Assessment")
+    st.title("📝 Cheminformatics Assessment")
 
     questions = [
         {"question":"What is the full form of SMILES?", "options":["Simplified Molecular Input Line Entry System","Standard Molecular Information Language Encoding System","Simple Molecular Identification and Labeling System"], "answer":"Simplified Molecular Input Line Entry System"},
@@ -2492,25 +2505,25 @@ elif page == "Assessment":
 
             st.balloons()
 
-            st.success("Excellent performance!")
+            st.success("🎉 Main character energy! Excellent score.")
 
         elif percentage >= 50:
 
-            st.info("Good! Continue practicing.")
+            st.info("👍 Solid! A little more practice and you've got it.")
 
         else:
 
             st.warning(
-                "Please review the Theory section and try again."
+                "📚 Please review the Theory section and try again."
             )
 
 # ============================================================
 # FINAL PROJECT REPORT
 # ============================================================
 
-elif page == "Final Project Report":
+elif page == "📄 Final Project Report":
 
-    st.title("Final Student Molecular Analysis Report")
+    st.title("📄 Final Student Molecular Analysis Report")
     st.write(
         "Enter one SMILES string per line. The report will include every valid molecule "
         "in a single downloadable PDF."
@@ -2571,14 +2584,14 @@ elif page == "Final Project Report":
             })
         st.dataframe(pd.DataFrame(preview_rows), use_container_width=True, hide_index=True)
 
-        if st.button("Generate Single PDF for All Molecules"):
+        if st.button("📄 Generate Single PDF for All Molecules"):
             with st.spinner(
                 f"Generating one PDF report for {len(molecule_records)} molecule(s)..."
             ):
                 pdf = generate_multi_final_report(name, reg, molecule_records)
-            st.success("Combined molecular report generated successfully!")
+            st.success("✅ Report is ready! Grab it below 👇")
             st.download_button(
-                label="Download Combined Molecular Report PDF",
+                label="⬇️ Download Combined Molecular Report PDF",
                 data=pdf,
                 file_name="Cheminformatics_Multi_Molecule_Report.pdf",
                 mime="application/pdf",
@@ -2594,6 +2607,7 @@ elif page == "Final Project Report":
 st.divider()
 
 st.caption(
-    "Cheminformatics Virtual Laboratory | "
-    "Developed using Python, Streamlit and RDKit"
+    "🧪 Cheminformatics Virtual Laboratory | "
+    "Developed using Python, Streamlit and RDKit
+     ****** PEACE OUT GUYS ✌️ ******"
 )
