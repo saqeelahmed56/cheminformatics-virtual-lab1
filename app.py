@@ -1542,7 +1542,7 @@ def generate_multi_final_report(student_name, registration_number, molecule_reco
 
 
 # ============================================================
-# VISITOR SIGN-IN (saves each visit to a private Google Sheet)
+# SAVE STUDENT DETAILS TO A PRIVATE GOOGLE SHEET
 # ============================================================
 
 import re
@@ -1560,8 +1560,9 @@ def sheet_is_configured():
         return False
 
 
-def log_visit_to_sheet(name, reg_no, email):
-    """Append one row to the Google Sheet. Returns True when saved."""
+def save_student_to_sheet(name, reg_no, email, row_number=None):
+    """Add a row for this student, or update their row if they edit details.
+    Returns the sheet row number, or None if saving failed."""
     try:
         import gspread
         from google.oauth2.service_account import Credentials
@@ -1573,74 +1574,22 @@ def log_visit_to_sheet(name, reg_no, email):
         worksheet = gspread.authorize(creds).open_by_key(st.secrets["sheet_id"]).sheet1
         if worksheet.row_values(1) != SHEET_HEADERS:
             worksheet.insert_row(SHEET_HEADERS, 1)
+            row_number = None
+
         ist = timezone(timedelta(hours=5, minutes=30))
-        worksheet.append_row(
-            [datetime.now(ist).strftime("%Y-%m-%d %H:%M:%S"), name, reg_no, email],
-            value_input_option="USER_ENTERED",
-        )
-        return True
+        row = [datetime.now(ist).strftime("%Y-%m-%d %H:%M:%S"), name, reg_no, email]
+
+        if row_number:
+            worksheet.update(f"A{row_number}:D{row_number}", [row])
+            return row_number
+
+        result = worksheet.append_row(row, value_input_option="USER_ENTERED")
+        updated_range = result.get("updates", {}).get("updatedRange", "")
+        match = re.search(r"A(\d+)", updated_range)
+        return int(match.group(1)) if match else None
     except Exception as error:
-        print("Could not save visitor to Google Sheet:", error)
-        return False
-
-
-if "visitor" not in st.session_state:
-    _, centre, _ = st.columns([1, 2, 1])
-    with centre:
-        st.markdown(
-            """
-            <div class="hero">
-              <h1>Cheminformatics Virtual Laboratory</h1>
-              <p class="college">SRM Institute of Science and Technology, Tiruchirappalli</p>
-              <p class="dept">Enter your details to begin</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
-        with st.form("visitor_form"):
-            v_name = st.text_input("Full name")
-            v_reg = st.text_input("Registration number")
-            v_email = st.text_input("Email address")
-            v_agree = st.checkbox(
-                "I understand that my name, registration number and email "
-                "are recorded for this laboratory course."
-            )
-            v_submit = st.form_submit_button("Start laboratory")
-
-        if not sheet_is_configured():
-            st.warning("The visitor log is not connected yet, so entries are not being saved.")
-
-        if v_submit:
-            problems = []
-            if not v_name.strip():
-                problems.append("Enter your full name.")
-            if not v_reg.strip():
-                problems.append("Enter your registration number.")
-            if not EMAIL_PATTERN.match(v_email.strip()):
-                problems.append("Enter a valid email address.")
-            if not v_agree:
-                problems.append("Tick the box to continue.")
-
-            if problems:
-                for message in problems:
-                    st.error(message)
-            else:
-                if sheet_is_configured():
-                    log_visit_to_sheet(v_name.strip(), v_reg.strip(), v_email.strip())
-                st.session_state["visitor"] = {
-                    "name": v_name.strip(),
-                    "reg_no": v_reg.strip(),
-                    "email": v_email.strip(),
-                }
-                st.rerun()
-    st.stop()
-
-# Pre-fill the sidebar fields with what the visitor entered
-if not st.session_state.get("student_name"):
-    st.session_state["student_name"] = st.session_state["visitor"]["name"]
-if not st.session_state.get("registration_number"):
-    st.session_state["registration_number"] = st.session_state["visitor"]["reg_no"]
+        print("Could not save student details to Google Sheet:", error)
+        return None
 
 
 # ============================================================
@@ -1677,6 +1626,27 @@ st.sidebar.divider()
 st.sidebar.markdown("### Student Information")
 student_name = st.sidebar.text_input("Student Name", key="student_name")
 registration_number = st.sidebar.text_input("Registration Number", key="registration_number")
+student_email = st.sidebar.text_input("Email", key="student_email")
+
+# Save the details once they are all filled in (one row per student session)
+_details_complete = bool(
+    student_name.strip()
+    and registration_number.strip()
+    and EMAIL_PATTERN.match(student_email.strip())
+)
+
+if student_email.strip() and not EMAIL_PATTERN.match(student_email.strip()):
+    st.sidebar.caption("Enter a valid email address.")
+
+if _details_complete and sheet_is_configured():
+    _current = (student_name.strip(), registration_number.strip(), student_email.strip())
+    if st.session_state.get("saved_details") != _current:
+        _row = save_student_to_sheet(*_current, row_number=st.session_state.get("sheet_row"))
+        if _row:
+            st.session_state["sheet_row"] = _row
+            st.session_state["saved_details"] = _current
+
+st.sidebar.caption("Your name, registration number and email are saved for this laboratory course.")
 
 st.sidebar.markdown("""
 ### Learning Objectives
