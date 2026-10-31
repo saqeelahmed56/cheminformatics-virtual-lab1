@@ -94,15 +94,15 @@ input:focus, textarea:focus{border-color:var(--lilac) !important;box-shadow:0 0 
 [data-testid="stImage"] img{border-radius:14px;border:1px solid var(--line);background:#fff;}
 iframe{border-radius:16px;border:1px solid var(--line);}
 /* hero */
-.hero{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:2rem 2rem 1.7rem;margin:.6rem 0 1.6rem;}
-.hero h1{margin:0 0 .5rem 0;padding-right:5.5rem;font-weight:800;font-size:clamp(1.7rem,4.4vw,2.7rem);line-height:1.1;}
-.hero .college{margin:0;font-size:1.08rem;font-weight:600;color:var(--lilac);padding-right:5.5rem;}
-.hero .dept{margin:.25rem 0 0;color:var(--muted);padding-right:5.5rem;}
+.hero{position:relative;overflow:hidden;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:2rem 2rem 1.7rem;margin:.6rem 0 1.6rem;}
+.hero h1{margin:0 0 .5rem 0;font-weight:800;font-size:clamp(1.7rem,4.4vw,2.7rem);line-height:1.1;}
+.hero .college{margin:0;font-size:1.08rem;font-weight:600;color:var(--lilac);}
+.hero .dept{margin:.25rem 0 0;color:var(--muted);}
 .hero .tagline{margin:1rem 0 .6rem;font-family:'Bricolage Grotesque',sans-serif;font-size:1.25rem;font-weight:700;color:var(--amber);}
 .hero .chip{display:inline-block;padding:.3rem .85rem;margin:.25rem .35rem 0 0;border:1px solid var(--line);border-radius:999px;background:var(--raise);font-size:.9rem;}
-.hero-ring{position:absolute;top:1.1rem;right:1.2rem;width:96px;height:96px;fill:none;stroke:var(--lilac);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:.9;}
+.hero-ring{display:block;margin:0 auto .9rem;width:76px;height:76px;fill:none;stroke:var(--lilac);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;opacity:.9;}
 .hero-ring line{stroke:var(--amber);}
-@media (max-width:640px){.hero{padding:1.4rem 1.2rem;}.hero-ring{width:64px;height:64px;top:.9rem;right:.9rem;}.hero h1,.hero .college,.hero .dept{padding-right:4rem;}}
+@media (max-width:640px){.hero{padding:1.4rem 1.2rem;}.hero-ring{width:60px;height:60px;}}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
 </style>
 """, unsafe_allow_html=True)
@@ -1704,22 +1704,22 @@ if page == "🏠 Home":
     st.markdown("### 🧪 What can you do here?")
 
     st.markdown("""
-    ✅ Drop in any SMILES
+    ✅ Enter any SMILES notation
 
     ✅ Check if your molecule is legit
 
-    ✅ See it in 2D
+    ✅ Generate 2D structures
 
-    ✅ Spin it around in 3D
+    ✅ Generate interactive 3D structures
 
-    ✅ Switch up the visual style
+    ✅ Select different molecular visualization styles
 
-    ✅ Get the full property stats
+    ✅ Calculate complete molecular properties
 
-    ✅ Download your report as a PDF
+    ✅ Download molecular reports
 
-    ✅ Compare molecules side by side
-
+    ✅ Compare multiple molecules
+    
     ✅ Test yourself with a quiz
     """)
 
@@ -1768,7 +1768,7 @@ if page == "🏠 Home":
 
     st.markdown("### 👨‍🏫 Developed by")
     st.markdown("**S Saqeel Ahmed**")
-    st.markdown("Guided by Dr.P.Pachamuthu")
+    st.markdown("Guided by Dr.P.Pachamuthu,Professor")
     st.markdown("Faculty of Engineering and Technology  ")
     st.markdown("SRM Institute of Science and Technology, Tiruchirappalli")
 
