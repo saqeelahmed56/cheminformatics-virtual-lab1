@@ -2,7 +2,8 @@ streamlit
 rdkit
 py3Dmol
 pandas
-fpdf2
-Pillow
 matplotlib
 reportlab
+Pillow
+gspread
+google-auth
