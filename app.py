@@ -1714,23 +1714,23 @@ if page == "🏠 Home":
     st.markdown("### 🧪 What can you do here?")
 
     st.markdown("""
-    ✅ Drop in any SMILES
+   ✅ Enter any SMILES notation
 
-    ✅ Check if your molecule is legit
+   ✅ Validate molecular structures
 
-    ✅ See it in 2D
+   ✅ Generate 2D structures
 
-    ✅ Spin it around in 3D
+   ✅ Generate interactive 3D structures
 
-    ✅ Switch up the visual style
+   ✅ Select different molecular visualization styles
 
-    ✅ Get the full property stats
+   ✅ Calculate complete molecular properties
 
-    ✅ Download your report as a PDF
+   ✅ Download molecular reports
 
-    ✅ Compare molecules side by side
+   ✅ Compare multiple molecules
 
-    ✅ Test yourself with a quiz
+   ✅ Complete an assessment
     """)
 
     st.markdown("### 🔬 Try these molecules")
@@ -2608,6 +2608,5 @@ st.divider()
 
 st.caption(
     "🧪 Cheminformatics Virtual Laboratory | "
-    "Developed using Python, Streamlit and RDKit |"
-    " PEACE OUT GUYS ✌️"
+    "Developed using Python, Streamlit and RDKit"
 )
